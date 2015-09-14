@@ -1,0 +1,97 @@
+Poppler-Compiling Guide:
+	MinGW:
+		1. open cmake-gui.exe in the cmake-3.3.0-win32-x86/bin folder
+		2. set the source code to openjpeg_v1_4_sources_r697
+		3. set the build binaries to openjpeg_v1_4_sources_r697/build (create this folder)
+		4. click the configure button and set the compiler to MinGW Makefiles and click Finish
+		5. Once complete, red text should appear. ignore this and click configure
+		6. Once done configuring, click Generate
+		7. Now navigate to the openjpeg_v1_4_sources_r697/build folder in cmd.exe (command prompt)
+		8. In this folder, type in "mingw32-make openjpeg" and press enter (if this doesn't work, add C:\MinGW\bin to your PATH variable (computer -> system properties -> advanced system settings -> environment variables -> PATH (in the list))
+		9. Now reopen CMAKE and click File->Delete Cache
+		10. Set the source code to poppler-0.34.0
+		11. Set the build binaries to poppler-0.34.0/build (create this folder)
+		12. Click the Configure button and set the compiler to MinGW Makefiles and click Finish
+		13. An error will appear as well as some red text. 
+		14. In the red text, set FREETYPE_INCLUDE_DIR_freetype2 to the freetype-dev_2.4.2-1_win32/include/freetype2 folder
+		15. Set the FREETYPE_INCLUDE_DIR_ft2build to the freetype-dev_2.4.2-1_win32/include folder
+		16. Set the FREETYPE_LIBRARY to the freetype-dev_2.4.2-1_win32/lib/freetype.lib file
+		17. Click configure again
+		18. Make sure the "Advanced" checkbox is checked (found under the "where to build the binaries" text box on the right)
+		19. In the new red text, set LIBOPENJPEG_INCLUDE_DIR to the openjpeg_v1_4_sources_r697/libopenjpeg folder
+		20. Set LIBOPENJPEG_LIBRARIES to the openjpeg_v1_4_sources_r697/build/bin/libopenjpeg.dll.a file
+		21. Set Qt5Core_DIR to C:/Qt/Qt5.5.0/5.5/mingw492_32/lib/cmake/Qt5Core or whichever version you have
+		22. Set Qt5Gui_DIR to C:/Qt/Qt5.5.0/5.5/mingw492_32/lib/cmake/Qt5Gui
+		23. Set Qt5Test_DIR to C:/Qt/Qt5.5.0/5.5/mingw492_32/lib/cmake/Qt5Test
+		24. Set Qt5Widgets_DIR to C:/Qt/Qt5.5.0/5.5/mingw492_32/lib/cmake/Qt5Widgets
+		25. Set Qt5Xml_DIR to C:/Qt/Qt5.5.0/5.5/mingw492_32/lib/cmake/Qt5Xml
+		26. Set ZLIB_INCLUDE_DIR to the zlib-dev_1.2.5-2_win32/include folder
+		27. Set ZLIB_LIBRARY to the zlib-dev_1.2.5-2_win32/lib/zdll.lib file
+		28. Turn off the checkboxes for WITH_Cairo, WITH_Iconv, WITH_PNG, and WITH_GLIB if it is there
+		29. Click configure once again.
+		30. Once this is done, click Generate.
+		31. Now, open the poppler-0.34.0\build\poppler\poppler-config.h file in a texteditor (such as notepad)
+		32. Under the #include <stdio.h> line, add the following line #define _WIN32_WINNT 0x0601 and save the file
+		33. In command prompt (cmd.exe) navigate to the poppler-0.34.0\build folder
+		34. Here, type in "mingw32-make" (without the quotes) and press enter
+		35. Once this is done compiling, copy out the libpoppler.dll and libpoppler.dll.a files from poppler-0.34.0\build into your project file
+		36. Copy out the libpoppler-qt5.dll and libpoppler-qt5.dll.a files from poppler-0.34.0\build\qt5\src
+		37. Copy out libopenjpeg.dll from the openjpeg_v1_4_sources_r697\build\bin folder into your project folder
+		38. Copy out freetype6.dll from the freetype-dev_2.4.2-1_win32 folder into your project folder
+		39. Rename libpoppler.dll.a and libpoppler-qt5.dll.a files to libpoppler.a and libpoppler-qt5.a respectively
+		40. In Qt Creator, right click the main project solution and click Add Library
+		41. Set it to External Library and click next
+		42. Set the library file to libpoppler.a
+		43. Uncheck Linux and Mac, and set Linkage to Static. Uncheck any of the Windows: sections boxes as well and then click next
+		44. Do the same for libpoppler-qt5.a
+		45. Finally, edit the projects .pro file and add the line INCLUDEPATH += $$PWD/poppler_src right underneath the FORMS    += mainwindow.ui line
+		46. Clean the project, rerun QMake, and build the project
+		47. In the build folder (up one level from the project source), copy all of the project dlls into the build folder, and the build's debug/release folders as well
+		48. You should now be able to use poppler.
+
+	Visual Studio:
+		1. open cmake-gui.exe in the cmake-3.3.0-win32-x86/bin folder
+		2. set the source code to openjpeg_v1_4_sources_r697
+		3. set the build binaries to openjpeg_v1_4_sources_r697/build (create this folder)
+		4. click the configure button and set the compiler to Visual Studio 10 2010 or Visual Studio 11 2012 (depending on which version of QT you installed) and click Finish
+		5. Once complete, red text should appear. ignore this and click configure
+		6. Once done configuring, click Generate
+		7. Open up the openjpeg_v1_4_sources_r697/build folder with windows explorer
+		8. In this folder, open ALL_BUILD.vcxproj with visual studio and build the project
+		9. Now reopen CMAKE and click File->Delete Cache
+		10. Set the source code to poppler-0.34.0
+		11. Set the build binaries to poppler-0.34.0/build (create this folder)
+		12. Click the Configure button and set the compiler to Visual Studio 10 2010 or Visual Studio 11 2012 and click Finish
+		13. An error will appear as well as some red text. 
+		14. In the red text, set FREETYPE_INCLUDE_DIR_freetype2 to the freetype-dev_2.4.2-1_win32/include/freetype2 folder
+		15. Set the FREETYPE_INCLUDE_DIR_ft2build to the freetype-dev_2.4.2-1_win32/include folder
+		16. Set the FREETYPE_LIBRARY to the freetype-dev_2.4.2-1_win32/lib/freetype.lib file
+		17. Click configure again
+		18. Make sure the "Advanced" checkbox is checked (found under the "where to build the binaries" text box on the right)
+		19. In the new red text, set LIBOPENJPEG_INCLUDE_DIR to the openjpeg_v1_4_sources_r697/libopenjpeg folder
+		20. Set LIBOPENJPEG_LIBRARIES to the openjpeg_v1_4_sources_r697\build\bin\Debug\openjpeg.lib file
+		21. Set Qt5Core_DIR to C:/Qt/Qt5.5.0/5.5/msvc2012/lib/cmake/Qt5Core or whichever version you have
+		22. Set Qt5Gui_DIR to C:/Qt/Qt5.5.0/5.5/msvc2012/lib/cmake/Qt5Gui
+		23. Set Qt5Test_DIR to C:/Qt/Qt5.5.0/5.5/msvc2012/lib/cmake/Qt5Test
+		24. Set Qt5Widgets_DIR to C:/Qt/Qt5.5.0/5.5/msvc2012/lib/cmake/Qt5Widgets
+		25. Set Qt5Xml_DIR to C:/Qt/Qt5.5.0/5.5/msvc2012/lib/cmake/Qt5Xml
+		26. Set ZLIB_INCLUDE_DIR to the zlib-dev_1.2.5-2_win32/include folder
+		27. Set ZLIB_LIBRARY to the zlib-dev_1.2.5-2_win32/lib/zdll.lib file
+		28. Turn off the checkboxes for WITH_Cairo, WITH_Iconv, WITH_PNG, and WITH_GLIB if it is there
+		29. Click configure once again.
+		30. Once this is done, click Generate.
+		31. Open up the poppler-0.34.0/build folder with windows explorer
+		32. In this folder, open ALL_BUILD.vcxproj with visual studio and build the project
+		33. Once this is done compiling, copy out the poppler.lib file from poppler-0.34.0\build\Debug into your project file
+		34. Copy out the poppler-qt5.dll and poppler-qt5.lib files from poppler-0.34.0\build\qt5\src\Debug
+		35. Copy out openjpeg.dll from the openjpeg_v1_4_sources_r697\build\bin\Debug folder into your project folder
+		36. Copy out freetype6.dll from the freetype-dev_2.4.2-1_win32 folder into your project folder
+		37. In Qt Creator, right click the main project solution and click Add Library
+		38. Set it to External Library and click next
+		39. Set the library file to poppler.lib
+		40. Uncheck Linux and Mac, and set Linkage to Dynamic. Uncheck any of the Windows: sections boxes as well and then click next
+		41. Do the same for poppler-qt5.lib
+		42. Finally, edit the projects .pro file and add the line "INCLUDEPATH += $$PWD/poppler_src" right underneath the "FORMS    += mainwindow.ui" line
+		43. Clean the project, rerun QMake, and build the project
+		44. In the build folder (up one level from the project source), copy all of the project dlls into the build folder, and the build's debug/release folders as well
+		45. You should now be able to use poppler.
